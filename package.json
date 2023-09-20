@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "nodemon -w src  -e ts --exec  ts-node  src/index.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.2"
+  }
+}

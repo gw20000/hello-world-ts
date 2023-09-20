@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "ES2016",  // compiling result complies to ES2016 norms 
+        "module": "CommonJS", // compiling result uses what module specification
+        "outDir": "dist", //compling reust is put in which dir 
+        "lib": ["ES2016"], // gloal env for your code editing 
+        "strictNullChecks": true // set null check strict or not , which means  unidefined or null can only be assigned to the exactly same type of variable 
+    },
+    "include": ["./src"]// specify tsc's compiling scope 
+}
