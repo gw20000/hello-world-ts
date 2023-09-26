@@ -153,13 +153,13 @@
 // demo5: using  ES modules  to refactor demo3  :  write TS modularization code, using ES Modules 
 
 
-// import { createDeck, shuffleDeck, displayDeck, distributeDeck } from "./fns"
-// import { PlayerNumber, LeftNumber } from "./enums"
+import { createDeck, shuffleDeck, displayDeck, distributeDeck } from "./fns"
+import { PlayerNumber, LeftNumber } from "./enums"
 
-// let deck = createDeck()
-// deck = shuffleDeck(deck)
-// displayDeck(deck)
-// distributeDeck(deck, PlayerNumber.two, LeftNumber.two | LeftNumber.two)
+let deck = createDeck()
+deck = shuffleDeck(deck)
+displayDeck(deck)
+distributeDeck(deck, PlayerNumber.two, LeftNumber.two | LeftNumber.two)
 
 
 
@@ -351,5 +351,103 @@ duck = 1 as unknown as Duck
 
 
 //demo9: refactor poker through  interface   and  type compatibility 
+
+
+// demo10:  increased   class syntax  by  TS  
+let base: number = 0
+
+class BlogUser {
+
+    // readonly id = this.getBaseInc() // userid 
+    readonly id: string
+    private allowNum: number = 3 // daily top limit of number of your post articles 
+    private curNum: number = 0 // daily cur number of your post articles
+
+    constructor() {
+        this.id = this.getBaseInc()
+    }
+
+    pubish(title: string) {
+        if (this.curNum < this.allowNum) {
+            console.log('user---' + this.id + ' have posted an article---' + 'article title :' + title)
+            this.curNum++
+        } else {
+
+            console.log('today the number of your posted article  is up to the top limit ')
+        }
+
+    }
+
+    private getBaseInc() {
+        let id = base + 1 + ''
+        let idLen = (id + '').length
+        if (idLen < 3) {
+            switch (idLen) {
+                case 1: {
+                    id = '00' + id
+                    break
+                }
+                case 2: {
+                    id = '0' + id
+
+                }
+            }
+        }
+        base++
+        return id
+    }
+
+}
+
+const user3 = new BlogUser()
+
+user3.pubish('article 1')
+user3.pubish('article 2')
+user3.pubish('article 3')
+user3.pubish('article 4')
+user3.pubish('article 5')
+
+
+//demo10: accessor properties 
+
+// accessor properties is not a new thing as it's supported by ES2016+ 
+
+//accessor properties  definition :    accessor property is designed to take control of  reading and  writing of a property 
+
+// an accessor property , in essence ,  is 2 regular fns  ;  set xxx  and  get xxx  are  just  sugar syntax  
+
+class Person {
+
+    constructor(public name: string, private _age: number) {
+        this.age = this._age
+    }
+
+    get age() {
+        return Math.floor(this._age)
+    }
+    set age(value: number) {
+        if (value < 0) {
+            this._age = 0
+        }
+        else if (value > 200) {
+            this._age = 200
+        }
+        else {
+            this._age = Math.floor(value)
+        }
+    }
+
+}
+
+
+const person1 = new Person('Tom', 20.5)
+
+console.log(person1.age)
+
+
+//  note :   dead cycle  don't have to lead to RAM leak  , but  endless recursive calling  is bound to lead to RAM leak.
+
+
+
 
 

@@ -1,7 +1,7 @@
 
 export enum Joker {
-    bigJoker = 'JOKER',
-    littleJoker = 'joker'
+    big = 'JOKER',
+    little = 'joker'
 }
 
 export enum Color {

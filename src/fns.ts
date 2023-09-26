@@ -1,5 +1,5 @@
 import { Color, Mark, Joker, PlayerNumber, LeftNumber } from "./enums"
-import { Deck } from "./types"
+import { Card, Deck, JokerCard } from "./types"
 
 export function createDeck(): Deck {
     const deck: Deck = []
@@ -9,26 +9,28 @@ export function createDeck(): Deck {
         colors.forEach((color) => {
             deck.push({
                 color,
-                mark
-            })
+                mark,
+                getString() {
+                    return color + mark
+                    // return this.color + this.mark
+                }
+            } as Card)   //using type asserting to assign to a value of specific type , to  implement  type compatibility 
         })
     })
-    deck.push(...[Joker.bigJoker, Joker.littleJoker])
+    //using non-literal value to assign to a value of specific type , to  implement  type compatibility 
+    let jokerBig: JokerCard = { type: Joker.big, getString() { return Joker.big } }
+    let jokerLittle: JokerCard = { type: Joker.little, getString() { return Joker.little } }
+    deck.push(...[
+        jokerBig,
+        jokerLittle
+    ])
     return deck
 }
 
 export function displayDeck(deck: Deck) {
     let result = '\n'
     deck.forEach((card, i) => {
-        if (card === Joker.bigJoker) {
-            return result += Joker.bigJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
-        }
-
-        if (card === Joker.littleJoker) {
-            return result += Joker.littleJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
-        }
-
-        result += card.color + card.mark + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
+        result += card.getString() + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
     })
     console.log(result + '\n')
 }
@@ -79,27 +81,14 @@ export function distributeDeck(deck: Deck, n: PlayerNumber, left: LeftNumber): v
     let result = '\n'
     if (eachNum % 1 === 0) {
         deck.forEach((card, i) => {
+
+            result += card.getString() + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
+
             if ((i + 1) % eachNum === 0 && (i + 1) !== deck.length) {
-                if (card === Joker.bigJoker) {
-                    return result += Joker.bigJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}` + '\n\n\n'
-                }
 
-                if (card === Joker.littleJoker) {
-                    return result += Joker.littleJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}` + '\n\n\n'
-                }
-
-                result += card.color + card.mark + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}` + '\n\n\n'
-            } else {
-                if (card === Joker.bigJoker) {
-                    return result += Joker.bigJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
-                }
-
-                if (card === Joker.littleJoker) {
-                    return result += Joker.littleJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
-                }
-
-                result += card.color + card.mark + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`
+                result += '\n\n\n'
             }
+
         })
 
     }

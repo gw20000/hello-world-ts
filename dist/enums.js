@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LeftNumber = exports.PlayerNumber = exports.Mark = exports.Color = exports.Joker = void 0;
 var Joker;
 (function (Joker) {
-    Joker["bigJoker"] = "JOKER";
-    Joker["littleJoker"] = "joker";
+    Joker["big"] = "JOKER";
+    Joker["little"] = "joker";
 })(Joker = exports.Joker || (exports.Joker = {}));
 var Color;
 (function (Color) {

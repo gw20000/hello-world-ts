@@ -9,7 +9,8 @@
         "esModuleInterop": true, // whether allow ES Modual being able to interact with other type of modularization standards, such as commonjs
         "removeComments": true,
         //  "noImplicitUseStrict": true ,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "strictPropertyInitialization": true
          
     },
     "include": ["./src"]// specify tsc's compiling scope 

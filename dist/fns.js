@@ -10,24 +10,26 @@ function createDeck() {
         colors.forEach((color) => {
             deck.push({
                 color,
-                mark
+                mark,
+                getString() {
+                    return color + mark;
+                }
             });
         });
     });
-    deck.push(...[enums_1.Joker.bigJoker, enums_1.Joker.littleJoker]);
+    let jokerBig = { type: enums_1.Joker.big, getString() { return enums_1.Joker.big; } };
+    let jokerLittle = { type: enums_1.Joker.little, getString() { return enums_1.Joker.little; } };
+    deck.push(...[
+        jokerBig,
+        jokerLittle
+    ]);
     return deck;
 }
 exports.createDeck = createDeck;
 function displayDeck(deck) {
     let result = '\n';
     deck.forEach((card, i) => {
-        if (card === enums_1.Joker.bigJoker) {
-            return result += enums_1.Joker.bigJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
-        }
-        if (card === enums_1.Joker.littleJoker) {
-            return result += enums_1.Joker.littleJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
-        }
-        result += card.color + card.mark + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
+        result += card.getString() + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
     });
     console.log(result + '\n');
 }
@@ -62,23 +64,9 @@ function distributeDeck(deck, n, left) {
     let result = '\n';
     if (eachNum % 1 === 0) {
         deck.forEach((card, i) => {
+            result += card.getString() + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
             if ((i + 1) % eachNum === 0 && (i + 1) !== deck.length) {
-                if (card === enums_1.Joker.bigJoker) {
-                    return result += enums_1.Joker.bigJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}` + '\n\n\n';
-                }
-                if (card === enums_1.Joker.littleJoker) {
-                    return result += enums_1.Joker.littleJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}` + '\n\n\n';
-                }
-                result += card.color + card.mark + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}` + '\n\n\n';
-            }
-            else {
-                if (card === enums_1.Joker.bigJoker) {
-                    return result += enums_1.Joker.bigJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
-                }
-                if (card === enums_1.Joker.littleJoker) {
-                    return result += enums_1.Joker.littleJoker + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
-                }
-                result += card.color + card.mark + ' ' + `${(i + 1) % 4 === 0 ? '\t' : ''}` + `${(i + 1) % 8 === 0 ? '\n' : ''}`;
+                result += '\n\n\n';
             }
         });
     }
