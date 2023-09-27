@@ -37,5 +37,12 @@ export enum LeftNumber {
     'zero' = 0,
     'two' = 2,
     'three',
-    'six' = 6
+    'four',
+    'six' = 6,
+    'eight' = 8
+}
+
+export enum DeckNum {
+    'one',
+    'two'
 }

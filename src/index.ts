@@ -6,6 +6,9 @@
 // let you = "jifjeifj"
 // let abc = 1
 
+import { Deck } from "./deck"
+import { DeckNum, LeftNumber, PlayerNumber } from "./enums"
+
 
 
 
@@ -153,13 +156,13 @@
 // demo5: using  ES modules  to refactor demo3  :  write TS modularization code, using ES Modules 
 
 
-import { createDeck, shuffleDeck, displayDeck, distributeDeck } from "./fns"
-import { PlayerNumber, LeftNumber } from "./enums"
+// import { createDeck, shuffleDeck, displayDeck, distributeDeck } from "./fns"
+// import { PlayerNumber, LeftNumber } from "./enums"
 
-let deck = createDeck()
-deck = shuffleDeck(deck)
-displayDeck(deck)
-distributeDeck(deck, PlayerNumber.two, LeftNumber.two | LeftNumber.two)
+// let deck = createDeck()
+// deck = shuffleDeck(deck)
+// displayDeck(deck)
+// distributeDeck(deck, PlayerNumber.two, LeftNumber.two | LeftNumber.two)
 
 
 
@@ -448,6 +451,17 @@ console.log(person1.age)
 //  note :   dead cycle  don't have to lead to RAM leak  , but  endless recursive calling  is bound to lead to RAM leak.
 
 
-
-
-
+const deck1 = new Deck(DeckNum.two)
+deck1.print()
+deck1.shuffe()
+// deck1.print()
+const distributeResult = deck1.distribute(PlayerNumber.four, LeftNumber.eight)
+distributeResult.forEach((deck, i, decks) => {
+    if (i === decks.length - 1) {
+        console.log('=======desk========')
+        deck.print()
+        return
+    }
+    console.log('=======player' + i + '========')
+    deck.print()
+})
