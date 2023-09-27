@@ -26,6 +26,9 @@ export class Deck {
             this.create()
         }
     }
+    /**
+     * create a Deck
+     */
     private create() {
         const colors = Object.values(Color)
         const marks = Object.values(Mark)
@@ -50,6 +53,9 @@ export class Deck {
             jokerLittle
         ])
     }
+    /**
+     * print cards
+     */
     print() {
         let result = '\n'
         this.cards.forEach((card, i) => {
@@ -57,6 +63,9 @@ export class Deck {
         })
         console.log(result + '\n')
     }
+    /**
+     * shuffe cards 
+     */
     shuffe() {
         this.cards.forEach((card, i) => {
             const temp = card
@@ -65,6 +74,12 @@ export class Deck {
             this.cards[targetIndex] = temp
         })
     }
+    /**
+     * distribut cards
+     * @param playerNum   number of players
+     * @param left        number of left cards on desk
+     * @returns           DistributingResult
+     */
     distribute(playerNum: PlayerNumber, left: LeftNumber): DistributingResult | never {
         let result: DistributingResult = []
         let curIndex = 0 // player index 
@@ -85,13 +100,17 @@ export class Deck {
             result[curIndex] = leftDeck
 
         } else {
-            // if cards 
-            throw new Error('the value of param left is now allowed when param playerNum is assigned with ' + playerNum)
+            // if nuber of left cards is not mathing players' number , throw error
+            throw new Error('the value of param left is not allowed when param playerNum is assigned with ' + playerNum)
         }
-
         return result
     }
-
+    /**
+     * get a random integer
+     * @param min  
+     * @param max 
+     * @returns 
+     */
     private getRandom(min: number, max: number) {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
