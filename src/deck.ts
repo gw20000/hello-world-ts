@@ -88,20 +88,32 @@ export class Deck {
             const n = (this.cards.length - left) / playerNum   // each player should have how many cards  except for left cards on desk 
             console.log('the number of cards each player has-----:', n)
             console.log('\n')
-            // distribute cards for each player  
-            for (let i = 0; i < this.cards.length; i++) {
-                if ((i + 1) % n === 0) {
-                    result[curIndex] = new Deck(this.deckN, this.cards.slice(i + 1 - n, i + 1))
-                    curIndex++
-                }
+
+            // distribution solution1:
+            // // distribute cards for each player  
+            // for (let i = 0; i < this.cards.length; i++) {
+            //     if ((i + 1) % n === 0) {
+            //         result[curIndex] = new Deck(this.deckN, this.cards.slice(i + 1 - n, i + 1))
+            //         curIndex++
+            //     }
+            // }
+            // //distribute cards for desk 
+            // const leftDeck = new Deck(this.deckN, this.cards.slice(this.cards.length - left, this.cards.length))
+            // result[curIndex] = leftDeck
+
+            // distribution solution2:
+
+            for (let i = 0; i < playerNum; i++) {
+                // distribute cards for each player  
+                result[i] = this.takeCards(n)
+                curIndex++
             }
             //distribute cards for desk 
-            const leftDeck = new Deck(this.deckN, this.cards.slice(this.cards.length - left, this.cards.length))
-            result[curIndex] = leftDeck
+            result[curIndex] = new Deck(this.deckN, this.cards)
 
         } else {
             // if nuber of left cards is not mathing players' number , throw error
-            throw new Error('the value of param left is not allowed when param playerNum is assigned with ' + playerNum)
+            throw new Error(`the value of param left is not allowed when param playerNum is assigned with ` + playerNum)
         }
         return result
     }
@@ -113,6 +125,13 @@ export class Deck {
      */
     private getRandom(min: number, max: number) {
         return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    private takeCards(n: number): Deck {
+        let cards: Card[] = []
+        for (let i = 0; i < n; i++) {
+            cards.push(this.cards.shift() as Card)
+        }
+        return new Deck(this.deckN, cards)
     }
 
 }

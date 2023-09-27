@@ -13,7 +13,7 @@ export enum Color {
 
 
 export enum Mark {
-    one = '1',
+    one = 'A',
     two = '2',
     three = '3',
     four = '4',

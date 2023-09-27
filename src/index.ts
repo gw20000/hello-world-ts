@@ -454,8 +454,10 @@ console.log(person1.age)
 const deck1 = new Deck(DeckNum.two)
 deck1.print()
 deck1.shuffe()
-// deck1.print()
+console.log('======after shuffled:======')
+deck1.print()
 const distributeResult = deck1.distribute(PlayerNumber.four, LeftNumber.eight)
+console.log('======after distributed:======\n')
 distributeResult.forEach((deck, i, decks) => {
     if (i === decks.length - 1) {
         console.log('=======desk========')
