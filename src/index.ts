@@ -7,7 +7,8 @@
 // let abc = 1
 
 import { Deck } from "./deck"
-import { DeckNum, LeftNumber, PlayerNumber } from "./enums"
+import { DeckNum, PlayerNumber, LeftNumber } from "./enums"
+
 
 
 
@@ -667,12 +668,12 @@ console.log(mixArrs([1, 2, 3], ['1', '2', '3']))
 
 
 
-
-// demo13:   custom class  Dictionary 
+// 🔥demo13:   custom class  Dictionary 
 // through a  generic type,  we can keep the consistence of  all the related postions to the generic type in the definition of certain entity (a fn, class, interface,or  type alias)
 
 export class Dictionary<K, V> {
     private arr1: K[] = [] // keys list :  i don't know the concrete type of each key (i don't know the type of the property arr  /  i don't know the type of each item of the property arr ), but i know  the keys' types are unified , so i can use a  generic type ; generic type  K  respresents  the type of every key  //   then when use this class (write calling this class)Dictionary, i pass the concrete type  , for example,  'string'
+
     private arr2: V[] = [] // values list 
 
     //  return the value based on / according to  a provided key  , if the key exists , return the responding value , if not , return undefined 
@@ -700,10 +701,10 @@ export class Dictionary<K, V> {
     // to  iterate over key-value pairs consisting of arr1 and arr2 :   callback says that iterately give me each key value pair  ,  then i will do some processing with it. 
 
     // execite a provide fn once per key-value pair in the Map, in insertion order
-    forEach(callback: CB<K, V>) {
+    forEach(cb: CB<K, V>) {
         this.arr1.forEach((k, i) => {
             const v = this.arr2[i]
-            callback(k, v)
+            cb(k, v, this)
         });
     }
 
@@ -746,7 +747,7 @@ console.log(dic)
 // tips : dubug :  print execution course  ,   forEach is designed  to get every item of an array  and to give it to the callback fn you have passed, so, we need to constrian the callback fn. 
 
 
-export type CB<U, T> = (key: U, val: T) => void  //  it minifests that like TS  says that  i also don't know the concrete types of the two params ( 2 postions : param1, param2) , but when u use me,  u tell me what types they are. 
+export type CB<U, T> = (key: U, val: T, dic: Dictionary<U, T>) => void  //  it minifests that like TS  says that  i also don't know the concrete types of the two params ( 2 postions : param1, param2) , but when u use me,  u tell me what types they are. 
 console.log('=====before delete c=====')
 console.log('size--', dic.size)
 dic.forEach((k, v) => console.log(k + ': ' + v))
@@ -771,6 +772,8 @@ interface MyMap<K, V> {
     readonly size: number
     // return the value associated with the specified key , if the key doesn't exist , return undefined 
     get(key: K): V | undefined
+    //execute a provided fn noce per key-value pair in the Map, in intertion order
+    forEach(callback: (k: K, v: V, map: MyMap<K, V>) => void): void
     // add a new key-value pair, if the key already exists , update the conrrespondnig value 
     set(key: K, value: V): this
     // true  if the key exists and the conrresponding key-value pair  has been romoved ; false if the key doesn't exist 
@@ -788,3 +791,6 @@ let obj3: MyMap<string, number> = new Dictionary<string, number>()
 
 //  }
 
+import path from 'path'
+
+console.log(path.resolve(__dirname, 'test'))
