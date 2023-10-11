@@ -3,7 +3,12 @@
         "target": "ES2016",  // compiling result(JS code) complies with  / comforms  to /with  what version of standard of  JS 
         "module": "CommonJS", // compiling result (JS code )uses what modularization standard 
         "outDir": "dist", //compling reust is put in which dir 
-        "lib": ["ES2016"], // gloal env for your code editing 
+        // "lib": ["ES2016"], // gloal env for your code editing 
+        "lib":[
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
         "strictNullChecks": true , // set null check strict or not , which means  unidefined or null can only be assigned to the exactly same type of variable,
         "noEmitOnError": true,// whether generate compiled result regardless of compiling errors 
         "esModuleInterop": true, // whether allow ES Modual being able to interact with other type of modularization standards, such as commonjs

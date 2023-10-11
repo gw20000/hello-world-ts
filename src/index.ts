@@ -794,3 +794,75 @@ let obj3: MyMap<string, number> = new Dictionary<string, number>()
 import path from 'path'
 
 console.log(path.resolve(__dirname, 'test'))
+
+
+
+
+// demo :  this example below  explains why we need generic type  ---- to cut off couple between  types and  functionality  
+
+// class  Dic 
+class Dic {
+
+    keys: any = []  // positoin 1 
+    values: any = []  // position 2 
+
+    set(key: any, value: any) { //  position 3 ,  position 4 
+
+    }
+
+}
+// in defining / developing class Dic,   u can  choose not to use type contraint/check by only adding  on type "any"  , but meanwhile u lose the benefits of type check   ------ for example,  when u write calling  method  set , in positon3 , u can pass a number  but  meanwhile TS type sys won't tip u any error becaue it doesn't know (loses the type info that )  there is a relation/connection/association between positon1  and  positon2  :  they should be the same type.
+
+// in defining / developing class Dic,  i do need  2 types ,  one for keys , one for values ,  but i don't care what concerete/specific  types they r , and  i just need to know there's 2 types out there.  ------  i do need 2 types , but i dont want to fix them , which makes  class Dic more 🔥adaptive/universal and 🔥flexible ----- so  i  need to  cut off the relation/connecton/ association  between  funcionality and  types ----- in this situation,  u need to use generic type. 
+
+// when we do the implementation  of class Dic , i don't care the 2 types ,but meanwhile i also need the 2 types. 
+
+
+// class  Dic  : refactored by generic type 
+class Dic2<K, V> {
+
+    keys: K[] = []  // positoin 1 
+    values: V[] = []  // position 2 
+
+    set(key: K, value: V) { //  position 3 ,  position 4 
+
+    }
+
+}
+
+// benefits:
+
+//1.  don't lose type info  :  type relaton beween positon1 and position3:  the  same type in  position 1 ad positon3 
+
+// 2.  cut off couple / relation  between   functionality and types  ,making   class Dic more 🔥adaptive/universal and 🔥flexible
+
+
+
+
+//demo:   TS's type compatibility 
+
+// type asserting  will often be got across during writing/ developing  Ajax request  ,  let me give an example like this:  
+
+interface USER {
+
+    _id: string
+    loginId: string
+    loginPwd: string
+
+
+}
+
+function getUser() {
+
+    fetch('/api/user')
+        .then(resp => resp.json())  // to JSON parse server response  message body 
+        .then(json => {
+            const user = json as USER  //  TS is unable to infer what type of this position (since json's type could only be known during JS runtime , which transcends the scope of TS's type system / which is out of Ts's type system's reach), and in this case, we can tell what type it is manually by using  type asserting  ; but note one thing that  don't rely excessively on type asserting , since mabye sometimes u r not smarter than TS's type system ; so it must be prudent before decide to use a type asserting -------u must be specially clear about what type of the position is as it should be 
+
+
+
+        })
+}
+
+
+
